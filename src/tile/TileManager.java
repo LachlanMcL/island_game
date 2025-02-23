@@ -5,6 +5,7 @@ import main.GamePanel;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,7 +37,18 @@ public class TileManager {
                     if (line == null) break;
                     String[] tileData = line.split(" ");
                     for (int i = 0; i < tileData.length; i++) {
-                        map[col][i] = Integer.parseInt(tileData[i]);
+                        int tileImageIndex = Integer.parseInt(tileData[i]);
+                        if (Integer.parseInt(tileData[i]) == 1) {
+                            int randomIndex = (int)(Math.random() * 5);
+                            switch (randomIndex) {
+                                case 0 -> tileImageIndex = 1;
+                                case 1 -> tileImageIndex = 6;
+                                case 2 -> tileImageIndex = 7;
+                                case 3 -> tileImageIndex = 8;
+                                case 4 -> tileImageIndex = 9;
+                            }
+                        }
+                        map[col][i] = tileImageIndex;
                     }
                     col++;
                 }
@@ -50,17 +62,18 @@ public class TileManager {
     public void getTileImage() {
         try {
             tiles[0] = new Tile();
-            tiles[0].tileImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("tiles/bricks.png"));
+            tiles[0].tileImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("tiles/bricks4.png"));
+            tiles[0].collision = true;
 
             tiles[1] = new Tile();
-            tiles[1].tileImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("tiles/grass.png"));
+            tiles[1].tileImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("tiles/grass1.png"));
 
             tiles[2] = new Tile();
             tiles[2].tileImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("tiles/ice.png"));
             tiles[2].collision = true;
 
             tiles[3] = new Tile();
-            tiles[3].tileImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("tiles/tree.png"));
+            tiles[3].tileImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("tiles/tree4.png"));
             tiles[3].collision = true;
 
             tiles[4] = new Tile();
@@ -68,6 +81,18 @@ public class TileManager {
 
             tiles[5] = new Tile();
             tiles[5].tileImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("tiles/dirt.png"));
+
+            tiles[6] = new Tile();
+            tiles[6].tileImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("tiles/grass5.png"));
+
+            tiles[7] = new Tile();
+            tiles[7].tileImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("tiles/grass3.png"));
+
+            tiles[8] = new Tile();
+            tiles[8].tileImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("tiles/grass4.png"));
+
+            tiles[9] = new Tile();
+            tiles[9].tileImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("tiles/grass6.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -77,11 +102,13 @@ public class TileManager {
 
 
         int worldCol = 0;
+        BufferedImage image ;
 
         while (worldCol < gp.maxWorldCol) {
             int worldRow = 0;
             while (worldRow < gp.maxWorldRow) {
                 int tileIndex = map[worldRow][worldCol];
+                image = tiles[tileIndex].tileImage;
 
                 int worldX = worldCol * gp.tileSize; //absolute pixel position of tile.
                 int worldY = worldRow * gp.tileSize;
@@ -93,7 +120,7 @@ public class TileManager {
                     && worldX < player.worldX + player.screenX + player.screenX
                     && worldY > player.worldY - player.screenY - gp.tileSize
                     && worldY < player.worldY + player.screenY + player.screenX) {
-                    g2.drawImage(tiles[tileIndex].tileImage, screenX, screenY, gp.tileSize, gp.tileSize, null);
+                    g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
                 }
                 worldRow++;
             }

@@ -1,6 +1,9 @@
 package main;
 
 import entity.Entity;
+import object.SuperObject;
+
+import java.awt.*;
 
 public class CollisionChecker {
     GamePanel gp;
@@ -46,5 +49,34 @@ public class CollisionChecker {
         }
 
         return gp.tileManager.tiles[tile1Index].collision && gp.tileManager.tiles[tile2Index].collision;
+    }
+
+    public int checkObject(Entity entity, boolean player) {
+        int index = -1;
+        for (int i = 0; i < gp.objects.length; i++) {
+            if (gp.objects[i] == null) continue;
+            SuperObject currObject = gp.objects[i];
+
+            Rectangle objectCollisionArea = new Rectangle(currObject.solidArea);
+            objectCollisionArea.x += currObject.worldX; //set true value of solid area
+            objectCollisionArea.y += currObject.worldY;
+
+            Rectangle entityCollisionArea = new Rectangle(entity.solidArea);
+            entityCollisionArea.x = entity.worldX;
+            entityCollisionArea.y = entity.worldY;
+
+            if (player) {
+                //move entityCollisionArea up, down, left, right depending on direction.
+                switch (entity.direction) {
+                    case "up" -> entityCollisionArea.y -= entity.speed;
+                    case "down" -> entityCollisionArea.y += entity.speed;
+                    case "left" -> entityCollisionArea.x -= entity.speed;
+                    case "right" -> entityCollisionArea.x += entity.speed;
+                }
+                if (entityCollisionArea.intersects(objectCollisionArea)) return i; //if player is moving over an object, return the object index for the gp.objects array.
+            }
+        }
+
+        return index;
     }
 }

@@ -13,9 +13,13 @@ public class Main {
         window.add(gamePanel);
 
         window.pack();
-        gamePanel.startGameThread();
 
         window.setLocationRelativeTo(null); //centre of screen
         window.setVisible(true);
+
+        gamePanel.setUpGame();
+        gamePanel.startGameThread();
+
+
     }
 }

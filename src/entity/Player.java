@@ -15,6 +15,9 @@ public class Player extends Entity{
     public final int screenX;
     public final int screenY;
 
+    //Inventory
+    int keys = 0;
+
     public Player(GamePanel gp, KeyHandler keyH) {
         this.gp = gp;
         this.keyH = keyH;
@@ -48,7 +51,7 @@ public class Player extends Entity{
     }
 
     public void setDefaultValues() {
-        worldX = gp.tileSize * 20;
+        worldX = gp.tileSize * 18;
         worldY = gp.tileSize * 25;
         speed = 4;
         direction = "down";
@@ -62,7 +65,34 @@ public class Player extends Entity{
         else if (keyH.rightPressed) direction = "right";
         else direction = "none";
 
-        collisionOn = gp.cChecker.checkTile(this);
+        collisionOn = gp.cChecker.checkTile(this); //check tile collision
+
+        //check object collision. index of -1 means no object was detected.
+        int objectIndex = gp.cChecker.checkObject(this,true);
+        if (objectIndex != -1) {
+            switch (gp.objects[objectIndex].name) {
+                case "Key" -> {
+                    keys++;
+                    gp.objects[objectIndex] = null;
+                    gp.playSE(0);
+                }
+                case "Door" -> {
+                    if (keys > 0) {
+                        keys--;
+                        gp.objects[objectIndex] = null;
+                        gp.playSE(2);
+                    } else {
+                        gp.player.collisionOn = true;
+                    }
+                }
+                case "Ethereal Feather" -> {
+                    gp.objects[objectIndex] = null;
+                    gp.player.speed += 2;
+                    gp.playSE(3);
+                }
+            }
+            System.out.println("Keys:"+keys);
+        }
 
         if (!collisionOn) {
             if (direction.equals("up")) worldY -= speed;
