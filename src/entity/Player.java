@@ -16,7 +16,7 @@ public class Player extends Entity{
     public final int screenY;
 
     //Inventory
-    int keys = 0;
+    public int keys = 0;
 
     public Player(GamePanel gp, KeyHandler keyH) {
         this.gp = gp;
@@ -89,6 +89,8 @@ public class Player extends Entity{
                     gp.objects[objectIndex] = null;
                     gp.player.speed += 2;
                     gp.playSE(3);
+                    gp.ui.message = "Speed up!";
+                    gp.ui.messageOn = true;
                 }
             }
             System.out.println("Keys:"+keys);

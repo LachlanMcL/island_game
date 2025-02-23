@@ -29,7 +29,9 @@ public class GamePanel extends JPanel implements Runnable{
     public CollisionChecker cChecker = new CollisionChecker(this);
     public SuperObject[] objects = new SuperObject[10];
     AssetSetter aSetter = new AssetSetter(this);
-    Sound soundManager = new Sound();
+    Sound musicManager = new Sound();
+    Sound soundEffectManager = new Sound();
+    public UI ui = new UI(this);
 
     Thread gameThread;
 
@@ -52,18 +54,18 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void playMusic(int i) {
-        soundManager.setFile(i);
-        soundManager.play();
-        soundManager.loop();
+        musicManager.setFile(i);
+        musicManager.play();
+        musicManager.loop();
     }
 
     public void stopMusic() {
-        soundManager.stop();
+        musicManager.stop();
     }
 
     public void playSE(int i) {
-        soundManager.setFile(i);
-        soundManager.play();
+        soundEffectManager.setFile(i);
+        soundEffectManager.play();
     }
 
 
@@ -74,15 +76,25 @@ public class GamePanel extends JPanel implements Runnable{
         double delta = 0;
         long lastTime = System.nanoTime();
         long currentTime;
+        long timer = 0;
+        long drawCount = 0;
 
         while (gameThread != null) {
             currentTime = System.nanoTime();
             delta += (currentTime - lastTime) / drawInterval;
+            timer += (currentTime - lastTime);
             lastTime = currentTime;
             if (delta >= 1) {
                 update();
                 repaint();
                 delta--;
+                drawCount++;
+            }
+
+            if (timer >= 1000000000) {
+                System.out.println("FPS: " + drawCount);
+                drawCount = 0;
+                timer = 0;
             }
         }
     }
@@ -102,35 +114,8 @@ public class GamePanel extends JPanel implements Runnable{
             if (objects[i] != null) objects[i].draw(g2, this);
         }
         player.draw(g2);
+        ui.draw(g2);
 
         g2.dispose();
     }
 }
-
-/*
-TINGS TO DO:
-part 10
-- UI and fixing stuf
-- make 2 sound objects, one for music one for SE
-- UI.java in main
-	- draw(Grapics2d g2)
-	- display keys that player has
-	- create a reusable Font object
-		- arial_40 = new Font("Arial", Font.PLAIN, 40)
-	- g2.setFont
-	- g2.setColor
-	- g2.drawString(string, x, y)
-- make image of key display
-- showMessage(String text)
-	- messageOn and message for UI
-- during UI draw method check if messageOn and if so display it.
-- g2.getFont().deriveFont(30F)
-- set messageCounter, after it reaches a max, messageOn is false
-- gameFinished boolean in UI
-- `textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth()`
-- `double playTime`
-- `DecimalFormat dFormat = new DecimalFormat("#0.00")`
-- dFormat.format(playTime)
-
-https://www.youtube.com/watch?v=0yD5iT8ObCs&list=PL_QPQmz5C6WUF-pOQDsbsKbaBZqXj4qSq&index=11&ab_channel=RyiSnow
- */
