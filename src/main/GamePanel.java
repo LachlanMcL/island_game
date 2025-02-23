@@ -110,7 +110,7 @@ public class GamePanel extends JPanel implements Runnable{
 /*
 TINGS TO DO:
 part 10
-- UI and fixing stuff
+- UI and fixing stuf
 - make 2 sound objects, one for music one for SE
 - UI.java in main
 	- draw(Grapics2d g2)
