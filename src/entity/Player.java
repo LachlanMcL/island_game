@@ -92,6 +92,11 @@ public class Player extends Entity{
                     gp.ui.message = "Speed up!";
                     gp.ui.messageOn = true;
                 }
+                case "Chest" -> {
+                    gp.playSE(4);
+                    gp.stopMusic();
+                    gp.ui.gameFinished = true;
+                }
             }
             System.out.println("Keys:"+keys);
         }
