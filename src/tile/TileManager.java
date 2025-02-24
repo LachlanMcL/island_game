@@ -21,7 +21,7 @@ public class TileManager {
         this.gp = gp;
         this.player = player;
 
-        tiles = new Tile[10];
+        tiles = new Tile[50];
         getTileImage();
         map = new int[gp.maxWorldRow][gp.maxWorldCol];
         loadMap("maps/map2.txt");
@@ -93,6 +93,23 @@ public class TileManager {
 
             tiles[9] = new Tile();
             tiles[9].tileImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("tiles/grass6.png"));
+
+            tiles[10] = new Tile();
+            tiles[10].tileImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("tiles/water1.png"));
+            tiles[10].collision = true;
+
+            tiles[11] = new Tile();
+            tiles[11].tileImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("tiles/water2.png"));
+            tiles[11].collision = true;
+
+            tiles[12] = new Tile();
+            tiles[12].tileImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("tiles/water3.png"));
+            tiles[12].collision = true;
+
+            tiles[13] = new Tile();
+            tiles[13].tileImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("tiles/water4.png"));
+            tiles[13].collision = true;
+
         } catch (IOException e) {
             e.printStackTrace();
         }
