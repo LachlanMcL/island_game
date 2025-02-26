@@ -25,8 +25,8 @@ public class CollisionChecker {
         int entityBottomRow = entityBottomWorldY / gp.tileSize;
 
         //there can be more than one tile in one direction next to player if they are in between two tiles.
-        int tile1Index = 0;
-        int tile2Index = 0;
+        int tile1Index;
+        int tile2Index;
 
         switch (entity.direction) {
             case "up" -> {

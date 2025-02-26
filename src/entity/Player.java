@@ -76,14 +76,20 @@ public class Player extends Entity{
                     keys++;
                     gp.objects[objectIndex] = null;
                     gp.playSE(0);
+                    gp.ui.message = "+1 Key";
+                    gp.ui.messageOn = true;
                 }
                 case "Door" -> {
                     if (keys > 0) {
                         keys--;
                         gp.objects[objectIndex] = null;
                         gp.playSE(2);
+                        gp.ui.message = "Area Unlocked!";
+                        gp.ui.messageOn = true;
                     } else {
                         gp.player.collisionOn = true;
+                        gp.ui.message = "Locked";
+                        gp.ui.messageOn = true;
                     }
                 }
                 case "Ethereal Feather" -> {

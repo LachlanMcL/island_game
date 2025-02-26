@@ -68,8 +68,6 @@ public class GamePanel extends JPanel implements Runnable{
         soundEffectManager.play();
     }
 
-
-
     @Override
     public void run() {
         double drawInterval = 1000000000/FPS;
@@ -108,8 +106,8 @@ public class GamePanel extends JPanel implements Runnable{
 
         Graphics2D g2 = (Graphics2D)g;
 
+        //draw order is important so the right things display over each other.
         tileManager.draw(g2);
-        //loop through objects after tiles
         for (int i = 0; i < objects.length; i++) {
             if (objects[i] != null) objects[i].draw(g2, this);
         }
