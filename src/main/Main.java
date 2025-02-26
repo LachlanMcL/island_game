@@ -14,7 +14,7 @@ public class Main {
 
         window.pack();
 
-        window.setLocationRelativeTo(null); //centre of screen
+        window.setLocationRelativeTo(null); //middle of screen
         window.setVisible(true);
 
         gamePanel.setUpGame();

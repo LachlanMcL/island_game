@@ -51,8 +51,8 @@ public class Player extends Entity{
     }
 
     public void setDefaultValues() {
-        worldX = gp.tileSize * 18;
-        worldY = gp.tileSize * 25;
+        worldX = gp.tileSize * 25;
+        worldY = gp.tileSize * 33;
         speed = 4;
         direction = "down";
     }
@@ -65,7 +65,8 @@ public class Player extends Entity{
         else if (keyH.rightPressed) direction = "right";
         else direction = "none";
 
-        collisionOn = gp.cChecker.checkTile(this); //check tile collision
+        collisionOn = false;
+        gp.cChecker.checkTile(this); //check tile collision
 
         //check object collision. index of -1 means no object was detected.
         int objectIndex = gp.cChecker.checkObject(this,true);
@@ -106,6 +107,7 @@ public class Player extends Entity{
             if (direction.equals("down")) worldY += speed;
             if (direction.equals("left")) worldX -= speed;
             if (direction.equals("right")) worldX += speed;
+            System.out.println("x: " + worldX / gp.tileSize + " y: " + worldY / gp.tileSize);
         }
 
     }
@@ -134,5 +136,7 @@ public class Player extends Entity{
             spriteCounter++;
         }
         g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+        g2.setColor(Color.red);
+        g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
     }
 }
