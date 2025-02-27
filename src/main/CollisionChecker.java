@@ -24,7 +24,7 @@ public class CollisionChecker {
         int entityTopRow = entityTopWorldY / gp.tileSize;
         int entityBottomRow = entityBottomWorldY / gp.tileSize;
 
-        //there can be more than one tile in one direction next to player if they are in between two tiles.
+        //there can be more than one tile in one direction next to player if they are between two tiles.
         int tile1Index;
         int tile2Index;
 
@@ -75,7 +75,7 @@ public class CollisionChecker {
             entityCollisionArea.y = entity.worldY;
 
             if (player) {
-                //move entityCollisionArea up, down, left, right depending on direction.
+                //move entityCollisionArea up, down, left, right depending on direction to determine if player hits an object.
                 switch (entity.direction) {
                     case "up" -> entityCollisionArea.y -= entity.speed;
                     case "down" -> entityCollisionArea.y += entity.speed;

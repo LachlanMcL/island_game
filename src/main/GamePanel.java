@@ -12,8 +12,9 @@ public class GamePanel extends JPanel implements Runnable{
     final int scale = 3;
     public final int tileSize = originalTileSize * scale;
 
-    public final int maxScreenCol = 16;
-    public final int maxScreenRow = 10;
+    //SCREEN SETTINGS
+    final int maxScreenCol = 16;
+    final int maxScreenRow = 10;
     public final int width = maxScreenCol * tileSize;
     public final int height = maxScreenRow * tileSize;
 
@@ -25,7 +26,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     KeyHandler keyH = new KeyHandler();
     public Player player = new Player(this, keyH);
-    TileManager tileManager = new TileManager(this, player);
+    TileManager tileManager = new TileManager(this);
     public CollisionChecker cChecker = new CollisionChecker(this);
     public SuperObject[] objects = new SuperObject[10];
     AssetSetter aSetter = new AssetSetter(this);
@@ -90,7 +91,7 @@ public class GamePanel extends JPanel implements Runnable{
             }
 
             if (timer >= 1000000000) {
-                System.out.println("FPS: " + drawCount);
+//                System.out.println("FPS: " + drawCount);
                 drawCount = 0;
                 timer = 0;
             }
@@ -108,8 +109,8 @@ public class GamePanel extends JPanel implements Runnable{
 
         //draw order is important so the right things display over each other.
         tileManager.draw(g2);
-        for (int i = 0; i < objects.length; i++) {
-            if (objects[i] != null) objects[i].draw(g2, this);
+        for (SuperObject object : objects) {
+            if (object != null) object.draw(g2, this);
         }
         player.draw(g2);
         ui.draw(g2);

@@ -19,7 +19,7 @@ public class SuperObject {
 
         //only draw object on screen if it is within the window view.
         if (worldX > gp.player.worldX - gp.player.screenX - gp.tileSize
-                && worldX < gp.player.worldX + gp.player.screenX + gp.player.screenX
+                && worldX < gp.player.worldX + gp.player.screenX + gp.tileSize
                 && worldY > gp.player.worldY - gp.player.screenY - gp.tileSize
                 && worldY < gp.player.worldY + gp.player.screenY + gp.player.screenX) {
             g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);

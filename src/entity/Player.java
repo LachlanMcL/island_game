@@ -25,6 +25,7 @@ public class Player extends Entity{
         screenX = gp.width / 2 - (gp.tileSize / 2);
         screenY = gp.height / 2 - (gp.tileSize / 2);
 
+        //set player hit box.
         solidArea = new Rectangle();
         solidArea.x = 8;
         solidArea.y = 16;
@@ -87,14 +88,14 @@ public class Player extends Entity{
                         gp.ui.message = "Area Unlocked!";
                         gp.ui.messageOn = true;
                     } else {
-                        gp.player.collisionOn = true;
+                        this.collisionOn = true;
                         gp.ui.message = "Locked";
                         gp.ui.messageOn = true;
                     }
                 }
                 case "Ethereal Feather" -> {
                     gp.objects[objectIndex] = null;
-                    gp.player.speed += 2;
+                    this.speed += 2;
                     gp.playSE(3);
                     gp.ui.message = "Speed up!";
                     gp.ui.messageOn = true;
@@ -105,7 +106,6 @@ public class Player extends Entity{
                     gp.ui.gameFinished = true;
                 }
             }
-            System.out.println("Keys:"+keys);
         }
 
         if (!collisionOn) {
@@ -113,13 +113,12 @@ public class Player extends Entity{
             if (direction.equals("down")) worldY += speed;
             if (direction.equals("left")) worldX -= speed;
             if (direction.equals("right")) worldX += speed;
-            System.out.println("x: " + worldX / gp.tileSize + " y: " + worldY / gp.tileSize);
+//            System.out.println("x: " + worldX / gp.tileSize + " y: " + worldY / gp.tileSize);
         }
 
     }
 
     public void draw(Graphics2D g2) {
-
         BufferedImage image = down1;
 
         if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
@@ -142,7 +141,7 @@ public class Player extends Entity{
             spriteCounter++;
         }
         g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
-        g2.setColor(Color.red);
-        g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
+//        g2.setColor(Color.red);
+//        g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
     }
 }

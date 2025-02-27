@@ -1,6 +1,5 @@
 package tile;
 
-import entity.Player;
 import main.GamePanel;
 
 import javax.imageio.ImageIO;
@@ -13,15 +12,16 @@ import java.io.InputStreamReader;
 
 public class TileManager {
     public Tile[] tiles;
+    int tileCount;
     GamePanel gp;
     public int[][] map;
-    Player player;
 
-    public TileManager(GamePanel gp, Player player) {
+    public TileManager(GamePanel gp) {
         this.gp = gp;
-        this.player = player;
 
         tiles = new Tile[50];
+        tileCount = 0;
+
         getTileImage();
         map = new int[gp.maxWorldRow][gp.maxWorldCol];
         loadMap("maps/map2.txt");
@@ -38,16 +38,19 @@ public class TileManager {
                     String[] tileData = line.split(" ");
                     for (int i = 0; i < tileData.length; i++) {
                         int tileImageIndex = Integer.parseInt(tileData[i]);
+
+                        //index == 1 means it is a grass tile. if it is a grass tile, randomize it to a different grass tile (so it looks better in game).
                         if (Integer.parseInt(tileData[i]) == 1) {
                             int randomIndex = (int)(Math.random() * 5);
                             switch (randomIndex) {
                                 case 0 -> tileImageIndex = 1;
-                                case 1 -> tileImageIndex = 6;
-                                case 2 -> tileImageIndex = 7;
-                                case 3 -> tileImageIndex = 8;
-                                case 4 -> tileImageIndex = 9;
+                                case 1 -> tileImageIndex = 2;
+                                case 2 -> tileImageIndex = 3;
+                                case 3 -> tileImageIndex = 4;
+                                case 4 -> tileImageIndex = 5;
                             }
                         }
+
                         map[col][i] = tileImageIndex;
                     }
                     col++;
@@ -59,110 +62,53 @@ public class TileManager {
         }
     }
 
-    public void getTileImage() {
+    public void tileSetter(String tileName) {
         try {
-            tiles[0] = new Tile();
-            tiles[0].tileImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("tiles/bricks4.png"));
-            tiles[0].collision = true;
-
-            tiles[1] = new Tile();
-            tiles[1].tileImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("tiles/grass1.png"));
-
-            tiles[2] = new Tile();
-            tiles[2].tileImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("tiles/ice.png"));
-            tiles[2].collision = true;
-
-            tiles[3] = new Tile();
-            tiles[3].tileImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("tiles/tree4.png"));
-            tiles[3].collision = true;
-
-            tiles[4] = new Tile();
-            tiles[4].tileImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("tiles/sand.png"));
-
-            tiles[5] = new Tile();
-            tiles[5].tileImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("tiles/dirt.png"));
-
-            tiles[6] = new Tile();
-            tiles[6].tileImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("tiles/grass5.png"));
-
-            tiles[7] = new Tile();
-            tiles[7].tileImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("tiles/grass3.png"));
-
-            tiles[8] = new Tile();
-            tiles[8].tileImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("tiles/grass4.png"));
-
-            tiles[9] = new Tile();
-            tiles[9].tileImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("tiles/grass6.png"));
-
-            tiles[10] = new Tile();
-            tiles[10].tileImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("tiles/water1.png"));
-            tiles[10].collision = true;
-
-            tiles[11] = new Tile();
-            tiles[11].tileImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("tiles/water2.png"));
-            tiles[11].collision = true;
-
-            tiles[12] = new Tile();
-            tiles[12].tileImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("tiles/water3.png"));
-            tiles[12].collision = true;
-
-            tiles[13] = new Tile();
-            tiles[13].tileImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("tiles/water4.png"));
-            tiles[13].collision = true;
-
-            tiles[14] = new Tile();
-            tiles[14].tileImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("tiles/water_top_left_corner.png"));
-            tiles[14].collision = true;
-
-            tiles[15] = new Tile();
-            tiles[15].tileImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("tiles/water_left.png"));
-            tiles[15].collision = true;
-
-            tiles[16] = new Tile();
-            tiles[16].tileImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("tiles/water_right.png"));
-            tiles[16].collision = true;
-
-            tiles[17] = new Tile();
-            tiles[17].tileImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("tiles/water_top_right_corner.png"));
-            tiles[17].collision = true;
-
-            tiles[18] = new Tile();
-            tiles[18].tileImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("tiles/water_bottom_right_corner.png"));
-            tiles[18].collision = true;
-
-            tiles[19] = new Tile();
-            tiles[19].tileImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("tiles/water_bottom_left_corner.png"));
-            tiles[19].collision = true;
-
-            tiles[20] = new Tile();
-            tiles[20].tileImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("tiles/water_bottom.png"));
-            tiles[20].collision = true;
-
-            tiles[21] = new Tile();
-            tiles[21].tileImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("tiles/water_bottom_right_corner_2.png"));
-            tiles[21].collision = true;
-
-            tiles[22] = new Tile();
-            tiles[22].tileImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("tiles/water_bottom_left_corner_2.png"));
-            tiles[22].collision = true;
-
-            tiles[23] = new Tile();
-            tiles[23].tileImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("tiles/water_top_right_corner_2.png"));
-            tiles[23].collision = true;
-
-            tiles[24] = new Tile();
-            tiles[24].tileImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("tiles/water_top_left_corner_2.png"));
-            tiles[24].collision = true;
-
-
+            tiles[tileCount] = new Tile();
+            tiles[tileCount].tileImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("tiles/" + tileName + ".png"));
+            tileCount++;
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    public void tileSetter(String tileName, boolean collision) {
+        try {
+            tiles[tileCount] = new Tile();
+            tiles[tileCount].tileImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("tiles/" + tileName + ".png"));
+            tiles[tileCount].collision = collision;
+            tileCount++;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getTileImage() {
+        tileSetter("bricks", true);
+        tileSetter("grass1");
+        tileSetter("grass2");
+        tileSetter("grass3");
+        tileSetter("grass4");
+        tileSetter("grass5");
+        tileSetter("tree", true);
+        tileSetter("water_top", true);
+        tileSetter("water_plain", true);
+        tileSetter("water_plain_heavy_current", true);
+        tileSetter("water_plain_light_current", true);
+        tileSetter("water_top_left_corner", true);
+        tileSetter("water_left", true);
+        tileSetter("water_right", true);
+        tileSetter("water_top_right_corner", true);
+        tileSetter("water_bottom_right_corner", true);
+        tileSetter("water_bottom_left_corner", true);
+        tileSetter("water_bottom", true);
+        tileSetter("water_bottom_right_corner_2", true);
+        tileSetter("water_bottom_left_corner_2", true);
+        tileSetter("water_top_right_corner_2", true);
+        tileSetter("water_top_left_corner_2", true);
+    }
+
     public void draw(Graphics2D g2) {
-
-
         int worldCol = 0;
         BufferedImage image ;
 
@@ -174,14 +120,14 @@ public class TileManager {
 
                 int worldX = worldCol * gp.tileSize; //absolute pixel position of tile.
                 int worldY = worldRow * gp.tileSize;
-                int screenX = worldX - player.worldX + player.screenX; //relative (to player) pixel position of tile.
-                int screenY = worldY - player.worldY + player.screenY;
+                int screenX = worldX - gp.player.worldX + gp.player.screenX; //relative (to player) pixel position of tile.
+                int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
                 //only draw tile on screen if it is within the window view.
-                if (worldX > player.worldX - player.screenX - gp.tileSize
-                    && worldX < player.worldX + player.screenX + player.screenX
-                    && worldY > player.worldY - player.screenY - gp.tileSize
-                    && worldY < player.worldY + player.screenY + player.screenX) {
+                if (worldX > gp.player.worldX - gp.player.screenX - gp.tileSize
+                    && worldX < gp.player.worldX + gp.player.screenX + gp.tileSize
+                    && worldY > gp.player.worldY - gp.player.screenY - gp.tileSize
+                    && worldY < gp.player.worldY + gp.player.screenY + gp.tileSize) {
                     g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
                 }
                 worldRow++;
