@@ -85,7 +85,7 @@ public class Player extends Entity{
                         keys--;
                         gp.objects[objectIndex] = null;
                         gp.playSE(2);
-                        gp.ui.message = "Area Unlocked!";
+                        gp.ui.message = "Area Unlocked";
                         gp.ui.messageOn = true;
                     } else {
                         this.collisionOn = true;
