@@ -50,7 +50,6 @@ public class TileManager {
                                 case 4 -> tileImageIndex = 5;
                             }
                         }
-
                         map[col][i] = tileImageIndex;
                     }
                     col++;
